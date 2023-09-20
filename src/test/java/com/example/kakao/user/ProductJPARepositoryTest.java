@@ -12,20 +12,21 @@ import com.example.kakao.product.ProductResponse;
 @DataJpaTest
 public class ProductJPARepositoryTest {
 
-    @Autowired
-    private ProductJPARepository productJPARepository;
+    // @Autowired
+    // private ProductJPARepository productJPARepository;
 
-    @Test
-    public ProductResponse.FindByIdDTO findById() {
-        Product product = productJPARepository.findById(2)
-                .orElseThrow(() -> new Exception404("해당 제품을 찾을 수 없습니다 : " + 2));
-        ProductResponse.FindByIdDTO findByIdDTO = new ProductResponse.FindByIdDTO(product, 4, "택배배송", "무료배송");
-        System.out.println(1);
-        System.out.println(findByIdDTO.getProductId());
-        System.out.println(findByIdDTO.getProductName());
-        System.out.println(findByIdDTO.getPrice());
+    // @Test
+    // public ProductResponse.FindByIdDTO findById() {
+    // Product product = productJPARepository.findById(2)
+    // .orElseThrow(() -> new Exception404("해당 제품을 찾을 수 없습니다 : " + 2));
+    // ProductResponse.FindByIdDTO findByIdDTO = new
+    // ProductResponse.FindByIdDTO(product, 4, "택배배송", "무료배송");
+    // System.out.println(1);
+    // System.out.println(findByIdDTO.getProductId());
+    // System.out.println(findByIdDTO.getProductName());
+    // System.out.println(findByIdDTO.getPrice());
 
-        return findByIdDTO;
-    }
+    // return findByIdDTO;
+    // }
 
 }

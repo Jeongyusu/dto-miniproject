@@ -1,7 +1,8 @@
 package com.example.kakao.product;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.example.kakao.product.option.Option;
 
@@ -16,33 +17,137 @@ public class ProductResponse {
     @Getter
     @Setter
     public static class FindAllDTO {
-
-    }
-
-    // (기능2) 상품 상세보기
-    @Getter
-    @Setter
-    public static class FindByIdDTO {
         private Integer productId;
         private String productName;
-        private Integer price;
-        private String porudctImageName;
-        private Integer starCount;
-        private String deliveryMethod;
-        private String deliveryPrice;
-        private List<Option> productOptions = new ArrayList<>();
+        private String productImageName;
+        private Integer productPrice;
 
-        public FindByIdDTO(Product product, Integer starCount, String deliveryMethod, String deliveryPrice) {
+        public FindAllDTO(Product product) {
             this.productId = product.getId();
             this.productName = product.getProductName();
-            this.price = product.getPrice();
-            this.porudctImageName = product.getImage();
-            this.starCount = starCount;
-            this.deliveryMethod = deliveryMethod;
-            this.deliveryPrice = deliveryPrice;
-            this.productOptions = product.getOptions();
+            this.productImageName = product.getImage();
+            this.productPrice = product.getPrice();
         }
 
     }
 
+    // (기능2) 상품 상세보기
+    @Setter
+    public static class FindByIdDTO {
+
+    }
+
+    // 상품조회 + 옵션조회
+    @Getter
+    @Setter
+    public static class FindByIdV1DTO {
+        private Integer productId;
+        private String productName;
+        private String productImage;
+        private Integer productPrice;
+        private Integer productStartCount;
+        private List<OptionDTO> options;
+
+        public FindByIdV1DTO(Product product, List<Option> options) {
+            this.productId = product.getId();
+            this.productName = product.getProductName();
+            this.productImage = product.getImage();
+            this.productPrice = product.getPrice();
+            this.productStartCount = 5;
+            this.options = options.stream()
+                    .map(o -> new OptionDTO(o))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public class OptionDTO {
+            private Integer optionId;
+            private String optionName;
+            private Integer optionPrice;
+
+            public OptionDTO(Option option) {
+                this.optionId = option.getId();
+                this.optionName = option.getOptionName();
+                this.optionPrice = option.getPrice();
+            }
+        }
+    }
+
+    // 양방향 매핑
+    @Getter
+    @Setter
+    public static class FindByIdV2DTO {
+        private Integer productId;
+        private String productName;
+        private String productImage;
+        private Integer productPrice;
+        private Integer productStartCount;
+        private List<OptionDTO> options;
+
+        public FindByIdV2DTO(Product product) {
+            this.productId = product.getId();
+            this.productName = product.getProductName();
+            this.productImage = product.getImage();
+            this.productPrice = product.getPrice();
+            this.productStartCount = 5;
+            System.out.println("이제 Lazy Loading 한다 =================");
+            this.options = product.getOptions().stream()
+                    .map(o -> new OptionDTO(o))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public class OptionDTO {
+            private Integer optionId;
+            private String optionName;
+            private Integer optionPrice;
+
+            public OptionDTO(Option option) {
+                System.out.println("이제 Lazy Loading 시작됨 =========");
+                this.optionId = option.getId();
+                this.optionName = option.getOptionName();
+                this.optionPrice = option.getPrice();
+            }
+        }
+    }
+
+    // 옵션만 조회
+    @Getter
+    @Setter
+    public static class FindByIdV3DTO {
+        private Integer productId;
+        private String productName;
+        private String productImage;
+        private Integer productPrice;
+        private Integer productStartCount;
+        private List<OptionDTO> options;
+
+        public FindByIdV3DTO(List<Option> options) {
+            System.out.println("이제 Lazy 시작한다???????????????????????");
+            this.productId = options.get(0).getProduct().getId();
+            this.productName = options.get(0).getProduct().getProductName();
+            this.productImage = options.get(0).getProduct().getImage();
+            this.productPrice = options.get(0).getProduct().getPrice();
+            this.productStartCount = 5;
+            this.options = options.stream()
+                    .map(o -> new OptionDTO(o))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public class OptionDTO {
+            private Integer optionId;
+            private String optionName;
+            private Integer optionPrice;
+
+            public OptionDTO(Option option) {
+                this.optionId = option.getId();
+                this.optionName = option.getOptionName();
+                this.optionPrice = option.getPrice();
+            }
+        }
+    }
 }
