@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.kakao._core.errors.exception.Exception401;
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.user.User;
+import com.example.kakao.user.UserJPARepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,11 +24,16 @@ public class CartRestController {
 
     private final CartService cartService;
     private final HttpSession session;
+    private final UserJPARepository userJPARepository;
+    private final CartJPARepository cartJPARepository;
 
     // (기능3) 장바구니 조회
     @GetMapping("/carts")
     public ResponseEntity<?> findAllByUser() {
-        return null;
+
+        User sessionUser = userJPARepository.findById(1).get();
+        CartResponse.FindAllByUserDTO findAllByUserDTO = cartService.findAllByUser(sessionUser);
+        return ResponseEntity.ok(ApiUtils.success(findAllByUserDTO));
     }
 
     // 장바구니 담기

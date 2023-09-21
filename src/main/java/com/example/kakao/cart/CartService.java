@@ -4,6 +4,8 @@ import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
+import com.example.kakao.user.UserJPARepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +19,19 @@ public class CartService {
 
     private final CartJPARepository cartJPARepository;
     private final OptionJPARepository optionJPARepository;
+    private final UserJPARepository userJPARepository;
 
     // (기능3) 장바구니 조회
     public CartResponse.FindAllByUserDTO findAllByUser(User sessionUser) {
-        return null;
+
+        // List<CartResponse.FindAllByUserDTO> responseDTOs =
+        // cartJPARepository.findAllByUserId(sessionUser.getId()).stream()
+        // .map(o->new CartResponse.FindAllByUserDTO(o.getOption().getProduct(),
+        // cartJPARepository.findAllByUserId(sessionUser.getId())))
+        // .collect(Collctors.toList());
+        List<Cart> carts = cartJPARepository.findAllByUserId(1);
+
+        return new CartResponse.FindAllByUserDTO(12100, carts);
     }
 
     @Transactional
