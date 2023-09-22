@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class OrderService {
-    private final ItemJPARepository ItemJPARepository;
+    private final ItemJPARepository itemJPARepository;
     private final OrderJPARepository orderJPARepository;
     private final CartJPARepository cartJPARepository;
 
@@ -29,10 +29,11 @@ public class OrderService {
         return null;
     }
 
-    
     // (기능5) 주문결과 확인
     public OrderResponse.FindByIdDTO findById(int id) {
-        return null;
+        Order orderPS = orderJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("해당 id의 상품을 찾을 수 없습니다 : " + id));
+        return new OrderResponse.FindByIdDTO(orderPS.getId(), itemJPARepository.findByOrder(orderPS));
     }
 
     @Transactional
@@ -58,7 +59,7 @@ public class OrderService {
             itemList.add(item);
         }
         try {
-            ItemJPARepository.saveAll(itemList);
+            itemJPARepository.saveAll(itemList);
         } catch (Exception e) {
             throw new Exception500("결재 실패 : " + e.getMessage());
         }
