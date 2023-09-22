@@ -64,3 +64,19 @@ INSERT INTO option_tb (`id`,`product_id`,`option_name`,`price`) VALUES ('45', '1
 INSERT INTO option_tb (`id`,`product_id`,`option_name`,`price`) VALUES ('46', '14', '[특품] 샤인머스켓 2kg 2-3수', '23900');
 INSERT INTO option_tb (`id`,`product_id`,`option_name`,`price`) VALUES ('47', '15', '화이트', '148000');
 INSERT INTO option_tb (`id`,`product_id`,`option_name`,`price`) VALUES ('48', '15', '블랙', '148000');
+
+INSERT INTO cart_tb (`id`,`user_id`,`option_id`,`quantity`,`price`) VALUES (4, 1, 3, 1, 9900);
+INSERT INTO cart_tb (`id`,`user_id`,`option_id`,`quantity`,`price`) VALUES (5, 1, 4, 1, 16900);
+INSERT INTO cart_tb (`id`,`user_id`,`option_id`,`quantity`,`price`) VALUES (6, 1, 17, 4, 100000);
+
+INSERT INTO order_tb (`id`,`user_id`) VALUES (1, 1);
+
+INSERT INTO item_tb (`option_id`,`order_id`,`quantity`,`price`) VALUES (1, 1, 1, 10000);
+INSERT INTO item_tb (`option_id`,`order_id`,`quantity`,`price`) VALUES (2, 1, 1, 10900);
+INSERT INTO item_tb (`option_id`,`order_id`,`quantity`,`price`) VALUES (6, 1, 1, 19800);
+-- 같은 주문건으로 1번으로 묶어버리기
+
+
+
+-- cart를 담고 결제를 하면 item이 생김
+-- item이 생기는 순간 cart가 삭제됨

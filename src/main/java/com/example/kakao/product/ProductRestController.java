@@ -25,6 +25,30 @@ public class ProductRestController {
     // (기능2) 상품 상세보기
     @GetMapping("/products/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
+
+        return null;
+    }
+
+
+
+    // -----------------------------
+
+        
+        @GetMapping("/products/{id}/v1")
+    public ResponseEntity<?> findByIdv1(@PathVariable int id) {
+        
+        return null;
+    }
+
+        @GetMapping("/products/{id}/v2")
+    public ResponseEntity<?> findByIdv2(@PathVariable int id) {
+        
+        return null;
+    }
+
+        @GetMapping("/products/{id}/v3")
+    public ResponseEntity<?> findByIdv3(@PathVariable int id) {
+        
         return null;
     }
 }
