@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.kakao._core.errors.exception.Exception401;
 import com.example.kakao._core.utils.ApiUtils;
+import com.example.kakao.cart.CartResponse.FindAllByUserDTO;
 import com.example.kakao.user.User;
 
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,17 @@ public class CartRestController {
     private final CartService cartService;
     private final HttpSession session;
 
+
     // (기능3) 장바구니 조회
     @GetMapping("/carts")
     public ResponseEntity<?> findAllByUser() {
-        return null;
+        System.out.println("테스트1");
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) {
+            throw new Exception401("인증되지 않았습니다");
+        }
+        CartResponse.FindAllByUserDTO findAllByuserDTOs = cartService.findAllByUser(sessionUser);
+        return ResponseEntity.ok(ApiUtils.success(findAllByuserDTOs));
     }
 
     // 장바구니 담기

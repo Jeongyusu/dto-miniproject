@@ -5,7 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
+
+import com.example.kakao.cart.Cart;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,7 +27,6 @@ public class User{
     private String password;
     @Column(length = 45, nullable = false)
     private String username;
-
     @Builder
     public User(int id, String email, String password, String username) {
         this.id = id;

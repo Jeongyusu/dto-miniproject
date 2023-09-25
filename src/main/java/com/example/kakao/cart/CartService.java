@@ -1,14 +1,21 @@
 package com.example.kakao.cart;
 
-import com.example.kakao._core.errors.exception.Exception404;
-import com.example.kakao.product.option.Option;
-import com.example.kakao.product.option.OptionJPARepository;
-import com.example.kakao.user.User;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.example.kakao._core.errors.exception.Exception404;
+import com.example.kakao.cart.CartResponse.FindAllByUserDTO;
+import com.example.kakao.product.Product;
+import com.example.kakao.product.ProductJPARepository;
+import com.example.kakao.product.option.Option;
+import com.example.kakao.product.option.OptionJPARepository;
+import com.example.kakao.user.User;
+import com.example.kakao.user.UserJPARepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -17,10 +24,16 @@ public class CartService {
 
     private final CartJPARepository cartJPARepository;
     private final OptionJPARepository optionJPARepository;
+    private final ProductJPARepository productJPARepository;
+    private final UserJPARepository userJPARepository;
 
     // (기능3) 장바구니 조회
     public CartResponse.FindAllByUserDTO findAllByUser(User sessionUser) {
-        return null;
+        List<Cart> cartList = cartJPARepository.findAllByUserId(sessionUser.getId());
+        List<Product> productList = productJPARepository.findByProductUserId(sessionUser.getId());
+
+        FindAllByUserDTO dtos = new CartResponse.FindAllByUserDTO(productList, cartList);
+        return dtos;
     }
 
     @Transactional
