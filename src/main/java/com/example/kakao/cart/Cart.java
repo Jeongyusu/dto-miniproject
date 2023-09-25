@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao.product.option.Option;
+import com.example.kakao.product.option.Option.OptionBuilder;
 import com.example.kakao.user.User;
 import lombok.*;
 

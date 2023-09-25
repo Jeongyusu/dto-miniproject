@@ -30,11 +30,11 @@ public class Product {
     private List<Option> options = new ArrayList<>();
 
     @Builder
-    public Product(int id, String productName, String description, String image, int price) {
-        this.id = id;
-        this.productName = productName;
-        this.description = description;
-        this.image = image;
-        this.price = price;
+    public Product(Product product) {
+        this.id = product.getId();
+        this.productName = product.getProductName();
+        this.description = product.getDescription();
+        this.image = product.getImage();
+        this.price = product.getPrice();
     }
 }
