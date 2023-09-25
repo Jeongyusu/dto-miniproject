@@ -1,5 +1,11 @@
 package com.example.kakao.order;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.example.kakao.cart.Cart;
+import com.example.kakao.order.OrderResponse.FindAllByUserDTO.CartDTO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,6 +17,39 @@ public class OrderResponse {
     @Getter
     @Setter
     public static class FindAllByUserDTO {
+
+        private List<CartDTO> carts;
+        private Integer totalPrice;
+
+        public FindAllByUserDTO(List<Cart> carts) {
+            this.carts = carts.stream()
+                    .map(o -> new CartDTO(o))
+                    .collect(Collectors.toList());
+            this.totalPrice = 0;
+
+            for (Cart cart : carts) {
+                totalPrice += cart.getPrice();
+            }
+        }
+
+        @Getter
+        @Setter
+        public class CartDTO {
+
+            private Integer cartId;
+            private String cartName;
+            private int price;
+            private int quantity;
+
+            public CartDTO(Cart cart) {
+                this.cartId = cart.getId();
+                this.cartName = cart.getOption().getProduct().getProductName() + " - "
+                        + cart.getOption().getOptionName();
+                this.price = cart.getPrice();
+                this.quantity = cart.getQuantity();
+            }
+
+        }
 
     }
 
