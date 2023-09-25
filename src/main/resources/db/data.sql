@@ -74,9 +74,3 @@ INSERT INTO order_tb (`id`,`user_id`) VALUES (1, 1);
 INSERT INTO item_tb (`option_id`,`order_id`,`quantity`,`price`) VALUES (1, 1, 1, 10000);
 INSERT INTO item_tb (`option_id`,`order_id`,`quantity`,`price`) VALUES (2, 1, 1, 10900);
 INSERT INTO item_tb (`option_id`,`order_id`,`quantity`,`price`) VALUES (6, 1, 1, 19800);
--- 같은 주문건으로 1번으로 묶어버리기
-
-
-
--- cart를 담고 결제를 하면 item이 생김
--- item이 생기는 순간 cart가 삭제됨
