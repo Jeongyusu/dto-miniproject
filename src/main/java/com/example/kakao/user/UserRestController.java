@@ -33,6 +33,7 @@ public class UserRestController {
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, BindingResult bindingResult) {
         String jwt = userService.login(requestDTO);
         // Authorization 넣고 Bearer 를 넣어줘야한다.
+        System.out.println("테스트 login : " + jwt);
         return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(null));
 
     }
