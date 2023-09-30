@@ -31,9 +31,10 @@ public class UserRestController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, BindingResult bindingResult) {
-        User sessionUser = userService.login(requestDTO);
-        session.setAttribute("sessionUser", sessionUser);
-        return ResponseEntity.ok().body(ApiUtils.success(null));
+        String jwt = userService.login(requestDTO);
+        // Authorization 넣고 Bearer 를 넣어줘야한다.
+        return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(null));
+
     }
 
     // 로그아웃
