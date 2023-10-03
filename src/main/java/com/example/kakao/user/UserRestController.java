@@ -1,7 +1,7 @@
 package com.example.kakao.user;
 
 import javax.servlet.http.HttpSession;
-
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -22,17 +22,21 @@ public class UserRestController {
 
     // 회원가입
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO requestDTO) {
+    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors) {
         userService.join(requestDTO);
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO requestDTO) {
-        User sessionUser = userService.login(requestDTO);
-        session.setAttribute("sessionUser", sessionUser);
-        return ResponseEntity.ok().body(ApiUtils.success(null));
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors) {
+        // User sessionUser = userService.login(requestDTO);
+        // session.setAttribute("sessionUser", sessionUser);
+
+        String jwt = userService.login(requestDTO);
+        
+        return ResponseEntity.ok().header("Autorization", "Bearer " + jwt).body(ApiUtils.success(null));
+        // 여기까지하면 토큰 발급한 거, 무조건 Bearer 띄어쓰기 필수
     }
 
     // 로그아웃
