@@ -32,7 +32,9 @@ public class OrderService {
 
     // (기능5) 주문결과 확인
     public OrderResponse.FindByIdDTO findById(int id) {
-        return null;
+        Order orderPS = orderJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("해당 id의 상품을 찾을 수 없습니다 : " + id));
+        return new OrderResponse.FindByIdDTO(orderPS.getId(), ItemJPARepository.findByOrder(orderPS));
     }
 
     @Transactional

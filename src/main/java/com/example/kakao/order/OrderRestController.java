@@ -35,7 +35,8 @@ public class OrderRestController {
     // (기능5) 주문결과 확인
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable Integer id) {
-        return null;
+        OrderResponse.FindByIdDTO responseDTO = orderService.findById(id);
+        return ResponseEntity.ok(responseDTO);
     }
 
     // (기능4) 주문상품 정보조회 (유저별) - 장바구니 내역 가져오기
