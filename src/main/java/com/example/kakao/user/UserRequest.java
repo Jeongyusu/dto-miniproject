@@ -1,6 +1,8 @@
 package com.example.kakao.user;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,13 +14,16 @@ public class UserRequest {
     @ToString
     public static class JoinDTO {
 
-        @NotEmpty(message = "email은 비어있을수 없습니다.")
+        @NotEmpty
+        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
         private String email;
 
-        @NotEmpty(message = "password는 비어있을수 없습니다.")
+        @NotEmpty
+        @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
         private String password;
-
-        @NotEmpty(message = "username은 비어있을수 없습니다.")
+        
+        @NotEmpty
         private String username;
 
         public User toEntity() {
@@ -34,11 +39,13 @@ public class UserRequest {
     @Setter
     @ToString
     public static class LoginDTO {
-
-        @NotEmpty(message = "email을 입력해주세요.")
+        @NotEmpty
+        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")       
         private String email;
-
-        @NotEmpty(message = "password를 입력해주세요.")
+        
+        @NotEmpty
+        @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
         private String password;
     }
 }

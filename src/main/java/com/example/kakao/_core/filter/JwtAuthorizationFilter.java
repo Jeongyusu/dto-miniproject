@@ -12,21 +12,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.kakao._core.errors.exception.Exception401;
+import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.JwtTokenUtils;
+import com.example.kakao._core.utils.ApiUtils.ApiResult;
 import com.example.kakao.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * /carts/**
+ * /orders/**
+ * /products/**
+ * 이 주소만 필터가 동작하면 된다
+ */
 
 public class JwtAuthorizationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
-
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
@@ -39,7 +50,6 @@ public class JwtAuthorizationFilter implements Filter {
         }
 
         try {
-
             DecodedJWT decodedJWT = JwtTokenUtils.verify(jwt);
             int userId = decodedJWT.getClaim("id").asInt();
             String email = decodedJWT.getClaim("email").asString();
